@@ -4,7 +4,7 @@ namespace Winex01\BackpackPermissionManager;
 
 use Illuminate\Support\ServiceProvider;
 
-class AddonServiceProvider extends ServiceProvider
+class BackpackPermissionManagerServiceProvider extends ServiceProvider
 {
     use AutomaticServiceProvider;
 
