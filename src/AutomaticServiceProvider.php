@@ -40,6 +40,16 @@ trait AutomaticServiceProvider
     public function boot(): void
     {
         $this->autoboot();
+
+        $this->app->bind(
+            \Backpack\PermissionManager\app\Http\Controllers\UserCrudController::class, 
+            \Winex01\BackpackPermissionManager\Http\Controllers\UserCrudController::class 
+        );
+
+        $this->app->bind(
+            \Backpack\PermissionManager\app\Http\Controllers\RoleCrudController::class, 
+            \Winex01\BackpackPermissionManager\Http\Controllers\RoleCrudController::class 
+        );
     }
 
     /**

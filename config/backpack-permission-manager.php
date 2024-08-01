@@ -2,6 +2,6 @@
 
 return [
     //
-    'roles_columns' => 2,
-    'permissions_columns' => 2,
+    'roles_columns' => 3,
+    'permissions_columns' => 3,
 ];
