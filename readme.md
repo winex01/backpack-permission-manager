@@ -19,7 +19,32 @@ composer require winex01/backpack-permission-manager
 ```
 
 ## Usage
+how does it worked, im using the roleName_permissionName convention
+```
+'admin' => [
+  'admin_view',
+  'admin_trashed_filter', 
+  'admin_debugbar', 
+  'admin_web_tinker', 
+  'admin_notify_newly_registered',
+  'admin_notify_newly_created_manga',
+  'admin_proxy_notice',
+  'admin_telescope',
+  'admin_widgets',
+  'admin_received_contact_us',
+  'admin_reply_contact_us',
+]
 
+'audit_trails' => [
+  'audit_trails_list',
+  'audit_trails_show', 
+  'audit_trails_delete',
+  'audit_trails_bulk_delete',
+  'audit_trails_export',
+  'audit_trails_restore_revise',
+  'audit_trails_bulk_restore_revise', 
+]
+```
 
 Uninstall this package. 
 ```bash
