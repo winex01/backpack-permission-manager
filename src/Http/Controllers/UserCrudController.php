@@ -3,11 +3,20 @@
 namespace Winex01\BackpackPermissionManager\Http\Controllers;
 
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
-use Winex01\BackpackPermissionManager\Http\Controllers\Operations\UserPermissionOperation;
+use Winex01\BackpackPermissionManager\Http\Controllers\Traits\UserPermissions;
 
 class UserCrudController extends BackpackUserCrudController
 {
-    use UserPermissionOperation;
+    use UserPermissions;
+
+    public function setup()
+    {
+        $this->crud->setModel(config('backpack.permissionmanager.models.user'));
+        $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.user'), trans('backpack::permissionmanager.users'));
+        $this->crud->setRoute(backpack_url('user'));
+
+        $this->userPermissions();
+    }
 
     protected function addUserFields()
     {

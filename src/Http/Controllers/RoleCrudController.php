@@ -3,14 +3,40 @@
 namespace Winex01\BackpackPermissionManager\Http\Controllers;
 
 use Spatie\Permission\PermissionRegistrar;
-use Backpack\PermissionManager\app\Http\Controllers\RoleCrudController as BackpackRoleCrudController;
+use Winex01\BackpackPermissionManager\Http\Controllers\Traits\UserPermissions;
 use Backpack\PermissionManager\app\Http\Requests\RoleStoreCrudRequest as StoreRequest;
 use Backpack\PermissionManager\app\Http\Requests\RoleUpdateCrudRequest as UpdateRequest;
+use Backpack\PermissionManager\app\Http\Controllers\RoleCrudController as BackpackRoleCrudController;
 
 // VALIDATION
 
 class RoleCrudController extends BackpackRoleCrudController
 {
+    use UserPermissions;
+
+    public function setup()
+    {
+        $this->role_model = $role_model = config('backpack.permissionmanager.models.role');
+        $this->permission_model = $permission_model = config('backpack.permissionmanager.models.permission');
+
+        $this->crud->setModel($role_model);
+        $this->crud->setEntityNameStrings(trans('backpack::permissionmanager.role'), trans('backpack::permissionmanager.roles'));
+        $this->crud->setRoute(backpack_url('role'));
+
+        // deny access according to configuration file
+        if (config('backpack.permissionmanager.allow_role_create') == false) {
+            $this->crud->denyAccess('create');
+        }
+        if (config('backpack.permissionmanager.allow_role_update') == false) {
+            $this->crud->denyAccess('update');
+        }
+        if (config('backpack.permissionmanager.allow_role_delete') == false) {
+            $this->crud->denyAccess('delete');
+        }
+
+        $this->userPermissions();
+    }
+
     public function setupCreateOperation()
     {
         $this->addFields();

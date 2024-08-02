@@ -4,9 +4,9 @@ namespace Winex01\BackpackPermissionManager\Http\Controllers\Traits;
 
 use Illuminate\Support\Str;
 
-trait UserPermission
+trait UserPermissions
 {
-    public function userPermission($role = null)
+    public function userPermissions($role = null)
     {
         if (!$role) {
             $role = $this->crud->model->getTable();
