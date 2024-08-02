@@ -49,25 +49,22 @@ how does it worked, im using the role_permission convention
 Restrict user without permissions:
 ```php
 //EntityCrudController.php
-
-use \Winex01\BackpackPermissionManager\Http\Controllers\Operations\UserPermissionOperation;
-
-// setup method etc...
-
-// Optional: you dont need to create this method if your role name is equal to table names, example: users
-public function role() : string
+public function setup()
 {
-    return 'users';
+    // some hode here..
+    
+    $this->userPermission('users'); // Optional parameter with a default value of current model tables name.
+
+    // if you follow roleName_permissionName and use the table's name as your roleName then you can leave it empty.
+    $this->userPermissions();
+
+    // calling $this->userPermissions method is equivalent:
+    $this->checkAccess('users');
+    $this->checkAccess('admin');
+
+    // you can either use userPermissions or the checkAccess method.
 }
 
-// Or if you want put multiple roles.
-public function roles() : array
-{
-    return [
-      'users',
-      'secret_process',
-    ];
-}
 ```
 Although above methods are called role and roles method it just checking if you have permission that starts with users or secret_process, that's why i recommend you to use the convention roleName_permissionName, like: users_list, users_create and etc..
 
