@@ -55,20 +55,20 @@ public function setup()
 {
     // some code here...
     
-    $this->userPermissions('users'); // Optional parameter with a default value of current model tables name.
+    // Option 1:
+    $this->userPermissions('user'); // it will check all permission that starts with user_ (i recommend to use prefix such as: user_list, user_create and etc..)
 
-    // if you follow roleName_permissionName and use the table's name as your roleName then you can leave it empty.
-    $this->userPermissions();
+    // Option 2:
+    $this->userPermissions(); // if you follow roleName_permissionName and use the table's name as your roleName then you can leave it empty.
 
+    // Option 3:
     // calling $this->userPermissions method is equivalent:
+    $this->crud->denyAllAccess(); // if you want to use the checkAccess method dont forget to call denyAllAccess method first
     $this->checkAccess('users');
     $this->checkAccess('admin');
-
-    // you can either use userPermissions or the checkAccess method.
 }
 
 ```
-Although above methods are called role and roles method it just checking if you have permission that starts with users or secret_process, that's why i recommend you to use the convention roleName_permissionName, like: users_list, users_create and etc..
 
 Uninstall this package. 
 ```bash
