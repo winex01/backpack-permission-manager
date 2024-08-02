@@ -1,52 +1,29 @@
 <?php
 
-namespace Winex01\BackpackPermissionManager\Http\Controllers\Operations;
+namespace Winex01\BackpackPermissionManager\Http\Controllers\Traits;
 
 use Illuminate\Support\Str;
 
-trait UserPermissionOperation
+trait UserPermission
 {
-    /**
-     * Add the default settings, buttons, etc that this operation needs.
-     */
-    protected function setupUserPermissionDefaults()
+    public function userPermission($role = null)
     {
-        $this->crud->operation('list', function() {
-            $this->setupUserPermissionOperation();
-        });
-    }
+        if (!$role) {
+            $role = $this->crud->model->getTable();
+        }
 
-    public function role() : string
-    {
-        return $this->crud->model->getTable();
-    }
-
-    public function roles() : array
-    {
-        return [];
-    }
-
-    private function setupUserPermissionOperation()
-    {
         // check access for current role & admin
-        $this->checkAccess($this->role());
+        $this->checkAccess($this->role);
         $this->checkAccess('admin');
         $this->checkAccess('menu_separator');
-
-        if (!empty($this->roles())) {
-            foreach ($this->roles() as $role) {
-                $this->checkAccess($role);
-            }
-        }
     }
 
-    private function checkAccess($role)
+    public function checkAccess($role)
     {
         $allRolePermissions = config('permission.models.permission')
             ::where('name', 'LIKE', "$role%")
             ->pluck('name')->map(function ($item) use ($role) {
                 $value = str_replace($role.'_', '', $item);
-                $value = Str::camel($value);
                 return $value;
             })->toArray();
 

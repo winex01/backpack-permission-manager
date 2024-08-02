@@ -3,9 +3,12 @@
 namespace Winex01\BackpackPermissionManager\Http\Controllers;
 
 use Backpack\PermissionManager\app\Http\Controllers\UserCrudController as BackpackUserCrudController;
+use Winex01\BackpackPermissionManager\Http\Controllers\Operations\UserPermissionOperation;
 
 class UserCrudController extends BackpackUserCrudController
 {
+    use UserPermissionOperation;
+
     protected function addUserFields()
     {
         $this->crud->addFields([
