@@ -49,11 +49,13 @@ how does it worked, im using the role_permission convention
 Restrict user without permissions:
 ```php
 //EntityCrudController.php
+use Winex01\BackpackPermissionManager\Http\Controllers\Traits\UserPermissions;
+
 public function setup()
 {
-    // some hode here..
+    // some code here...
     
-    $this->userPermission('users'); // Optional parameter with a default value of current model tables name.
+    $this->userPermissions('users'); // Optional parameter with a default value of current model tables name.
 
     // if you follow roleName_permissionName and use the table's name as your roleName then you can leave it empty.
     $this->userPermissions();
