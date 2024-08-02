@@ -19,7 +19,7 @@ composer require winex01/backpack-permission-manager
 ```
 
 ## Usage
-how does it worked, im using the roleName_permissionName convention
+how does it worked, im using the role_permission convention
 ```
 'admin' => [
   'admin_view',
@@ -45,6 +45,31 @@ how does it worked, im using the roleName_permissionName convention
   'audit_trails_bulk_restore_revise', 
 ]
 ```
+
+Restrict user without permissions:
+```php
+//EntityCrudController.php
+
+use \Winex01\BackpackPermissionManager\Http\Controllers\Operations\UserPermissionOperation;
+
+// setup method etc...
+
+// Optional: you dont need to create this method if your role name is equal to table names, example: users
+public function role() : string
+{
+    return 'users';
+}
+
+// Or if you want put multiple roles.
+public function roles() : array
+{
+    return [
+      'users',
+      'secret_process',
+    ];
+}
+```
+Although above methods are called role and roles method it just checking if you have permission that starts with users or secret_process, that's why i recommend you to use the convention roleName_permissionName, like: users_list, users_create and etc..
 
 Uninstall this package. 
 ```bash
