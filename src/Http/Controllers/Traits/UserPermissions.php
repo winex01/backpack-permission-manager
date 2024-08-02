@@ -7,10 +7,8 @@ use Illuminate\Support\Str;
 trait UserPermissions
 {
     public function userPermissions($role = null)
-    {
-        if (!$role) {
-            $role = $this->crud->model->getTable();
-        }
+    {   
+        $this->crud->denyAllAccess();
 
         // check access for current role & admin
         $this->checkAccess($role);
@@ -20,15 +18,7 @@ trait UserPermissions
 
     public function checkAccess($role)
     {
-        $allRolePermissions = config('permission.models.permission')
-            ::where('name', 'LIKE', "$role%")
-            ->pluck('name')->map(function ($item) use ($role) {
-                $value = str_replace($role.'_', '', $item);
-                return $value;
-            })->toArray();
-
-        // deny all access first
-        $this->crud->denyAccess($allRolePermissions);
+        $role = $role ?? $this->crud->model->getTable();
 
         $permissions = auth()->user()->getAllPermissions()
             ->pluck('name')
