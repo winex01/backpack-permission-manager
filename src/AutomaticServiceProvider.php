@@ -146,6 +146,13 @@ trait AutomaticServiceProvider
             ], 'lang');
         }
 
+        // Publishing seeders
+        if ($this->packageDirectoryExistsAndIsNotEmpty('database/seeders')) {
+            $this->publishes([
+                $this->path.'/database/seeders' => base_path('database/seeders'),
+            ], 'seeders');
+        }
+
         // Registering package commands.
         if (! empty($this->commands)) {
             $this->commands($this->commands);

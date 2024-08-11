@@ -4,7 +4,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![The Whole Fruit Manifesto](https://img.shields.io/badge/writing%20standard-the%20whole%20fruit-brightgreen)](https://github.com/the-whole-fruit/manifesto)
 
-This package override the [Backpack PermissionManager](https://github.com/Laravel-Backpack/PermissionManager) and display the checklist field role and permissions into groups. 
+This package override the [Backpack PermissionManager](https://github.com/Laravel-Backpack/PermissionManager) and display the checklist field role and permissions into groups. Check the laravel permission manager package on how to setup.
 
 ## Screenshots
 ![Backpack Permission Manager Extension](https://github.com/user-attachments/assets/8f7c74e9-134b-4394-ba2a-fef8b51716fd)
@@ -16,6 +16,26 @@ Via Composer
 
 ``` bash
 composer require winex01/backpack-permission-manager
+```
+## dont forget to make guard null
+
+```php
+//config/backpack/base.php
+
+// The guard that protects the Backpack admin panel.
+// If null, the config.auth.defaults.guard value will be used.
+// 'guard' => 'backpack',
+'guard' => null
+```
+
+## seeder
+```
+php artisan vendor:publish --provider="Winex01\BackpackPermissionManager\BackpackPermissionManagerServiceProvider" --tag="seeders"
+```
+
+## run the seeder
+```
+php artisan db:seed --class=RolesAndPermissionsSeeder
 ```
 
 ## Usage
