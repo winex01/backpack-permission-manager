@@ -88,7 +88,7 @@
               @endif
             @endif
           </div>
-    
+
         {{-- ROLES --}}
         @php
             $roles = $primary_dependency['model']::orderBy('name', 'asc')->get();
@@ -131,11 +131,11 @@
         <label>{!! $secondary_dependency['label'] !!}</label>
         @include('crud::fields.inc.translatable_icon', ['field' => $secondary_dependency])
     </div>
-      
+
     @php
         $roles = $roles->pluck('name')->toArray();
     @endphp
-    
+
     @foreach ($roles as $role)
         @php
         $count = config('backpack.permissionmanager.models.permission')::where('name', 'LIKE', $role.'_%')->count('name');
@@ -169,7 +169,7 @@
             @endif
             </div>
 
-            @foreach ($secondary_dependency['model']::where('name', 'like', "$filter%")->get() as $connected_entity_entry)
+            @foreach ($secondary_dependency['model']::where('name', 'like', "$filter%")->orderBy('id', 'asc')->get() as $connected_entity_entry)
                 <div class="col-sm-{{ isset($secondary_dependency['number_columns']) ? intval(12/$secondary_dependency['number_columns']) : '4'}}">
                     <div class="checkbox">
                         <label class="font-weight-normal">
@@ -192,7 +192,7 @@
                                 @if(isset( $secondary_ids[$connected_entity_entry->id]))
                                 disabled = disabled
                                 @endif
-                            @endif > 
+                            @endif >
                                 {{-- {{ $connected_entity_entry->{$secondary_dependency['attribute']} }} --}}
                                 {{ rolePermissionName($filter, $connected_entity_entry->{$secondary_dependency['attribute']}) }}
 
@@ -205,7 +205,7 @@
 
     @endforeach
 
-      
+
     </div>{{-- /.container --}}
 
 
@@ -255,7 +255,7 @@
                 hidden.remove();
             });
           };
-          
+
           thisField.find('div.hidden_fields_primary').children('input').first().on('CrudField:disable', function(e) {
               let input = $(e.target);
               input.parent().parent().find('input[type=checkbox]').attr('disabled', 'disabled');
